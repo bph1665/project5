@@ -1,0 +1,67 @@
+verion: 2.1
+
+parameters:
+  build-code:
+    type: boolean
+    default: false
+  build-eks:
+    type: boolean
+    default: false
+
+jobs:
+  infra:
+    docker:
+      - image: amazon/aws-cli:latest
+    steps:
+      - checkout
+      - run:
+          name: update eks cluster
+          command: |
+            cloudformation update-stack --stack-name eks --region us-east-2 --template-body file://eks/eks.yml
+  
+  build:
+    docker:
+      # Use the same Docker base as the project
+      - image: python:3.7.3-stretch
+        working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+# run lint!
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint 
+
+workflows:
+  build-infra:
+    when: << pipeline.parameters.build-eks >>
+    jobs:
+      - infra
+  build:
+    when: << pipeline.parameters.build-code >>
+    jobs:
+      - build
+

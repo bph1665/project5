@@ -1,0 +1,19 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: '2.1'
+orbs:
+  path-filtering: circleci/path-filtering@0.0.1
+workflows:
+  generate-config:
+    jobs:
+      - path-filtering/filter:
+          base-revision: main
+          config-path: .circleci/continue-config.yml
+          mapping: |
+            src/.* build-code true
+            eks/.* build-eks true
+
+
+

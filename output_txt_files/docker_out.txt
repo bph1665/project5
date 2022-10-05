@@ -1,0 +1,133 @@
+(.devops) voclabs:~/environment/project4/project-ml-microservice-kubernetes (master) $ ./run_docker.sh 
+Sending build context to Docker daemon  749.6kB
+Step 1/6 : FROM python:3.7.3-stretch
+ ---> 34a518642c76
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 61097a91ab31
+Step 3/6 : COPY . app.py /app/
+ ---> 39d41ef59602
+Step 4/6 : RUN pip install --no-cache-dir --upgrade pip &&    pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
+ ---> Running in 16810efe3d3c
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/1f/2c/d9626f045e7b49a6225c6b09257861f24da78f4e5f23af2ddbdf852c99b8/pip-22.2.2-py3-none-any.whl (2.0MB)
+Installing collected packages: pip
+  Found existing installation: pip 19.1.1
+    Uninstalling pip-19.1.1:
+      Successfully uninstalled pip-19.1.1
+Successfully installed pip-22.2.2
+Collecting Click==7.0
+  Downloading Click-7.0-py2.py3-none-any.whl (81 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 81.3/81.3 kB 60.1 MB/s eta 0:00:00
+Collecting Flask==1.0.2
+  Downloading Flask-1.0.2-py2.py3-none-any.whl (91 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.4/91.4 kB 149.6 MB/s eta 0:00:00
+Collecting itsdangerous==1.1.0
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2==2.10.3
+  Downloading Jinja2-2.10.3-py2.py3-none-any.whl (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.3/125.3 kB 150.3 MB/s eta 0:00:00
+Collecting MarkupSafe==1.1.1
+  Downloading MarkupSafe-1.1.1-cp37-cp37m-manylinux2010_x86_64.whl (33 kB)
+Collecting numpy==1.17.2
+  Downloading numpy-1.17.2-cp37-cp37m-manylinux1_x86_64.whl (20.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.3/20.3 MB 113.0 MB/s eta 0:00:00
+Collecting pandas==0.24.2
+  Downloading pandas-0.24.2-cp37-cp37m-manylinux1_x86_64.whl (10.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 79.9 MB/s eta 0:00:00
+Collecting python-dateutil==2.8.0
+  Downloading python_dateutil-2.8.0-py2.py3-none-any.whl (226 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.8/226.8 kB 145.3 MB/s eta 0:00:00
+Collecting pytz==2019.3
+  Downloading pytz-2019.3-py2.py3-none-any.whl (509 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 144.1 MB/s eta 0:00:00
+Collecting scikit-learn==0.20.3
+  Downloading scikit_learn-0.20.3-cp37-cp37m-manylinux1_x86_64.whl (5.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 112.0 MB/s eta 0:00:00
+Collecting scipy==1.3.1
+  Downloading scipy-1.3.1-cp37-cp37m-manylinux1_x86_64.whl (25.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 25.2/25.2 MB 112.1 MB/s eta 0:00:00
+Collecting six==1.12.0
+  Downloading six-1.12.0-py2.py3-none-any.whl (10 kB)
+Collecting Werkzeug==0.16.0
+  Downloading Werkzeug-0.16.0-py2.py3-none-any.whl (327 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 327.3/327.3 kB 159.3 MB/s eta 0:00:00
+Collecting pylint==2.4.4
+  Downloading pylint-2.4.4-py3-none-any.whl (302 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 303.0/303.0 kB 158.6 MB/s eta 0:00:00
+Collecting mccabe<0.7,>=0.6
+  Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+Collecting isort<5,>=4.2.5
+  Downloading isort-4.3.21-py2.py3-none-any.whl (42 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 kB 117.7 MB/s eta 0:00:00
+Collecting astroid<2.4,>=2.3.0
+  Downloading astroid-2.3.3-py3-none-any.whl (205 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 205.7/205.7 kB 150.1 MB/s eta 0:00:00
+Collecting lazy-object-proxy==1.4.*
+  Downloading lazy_object_proxy-1.4.3-cp37-cp37m-manylinux1_x86_64.whl (56 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 kB 127.9 MB/s eta 0:00:00
+Collecting wrapt==1.11.*
+  Downloading wrapt-1.11.2.tar.gz (27 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting typed-ast<1.5,>=1.4.0
+  Downloading typed_ast-1.4.3-cp37-cp37m-manylinux1_x86_64.whl (743 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 743.4/743.4 kB 155.1 MB/s eta 0:00:00
+Building wheels for collected packages: wrapt
+  Building wheel for wrapt (setup.py): started
+  Building wheel for wrapt (setup.py): finished with status 'done'
+  Created wheel for wrapt: filename=wrapt-1.11.2-cp37-cp37m-linux_x86_64.whl size=71326 sha256=f81b448ef5844310f22cd54ad50ae55b3a332754ed519052dddebfde2efbca14
+  Stored in directory: /tmp/pip-ephem-wheel-cache-lk11n76c/wheels/23/5f/62/304b411f20be41821465a82bc98baabc5e68c3cdd1eb99db71
+Successfully built wrapt
+Installing collected packages: wrapt, typed-ast, pytz, mccabe, Werkzeug, six, numpy, MarkupSafe, lazy-object-proxy, itsdangerous, isort, Click, scipy, python-dateutil, Jinja2, astroid, scikit-learn, pylint, pandas, Flask
+Successfully installed Click-7.0 Flask-1.0.2 Jinja2-2.10.3 MarkupSafe-1.1.1 Werkzeug-0.16.0 astroid-2.3.3 isort-4.3.21 itsdangerous-1.1.0 lazy-object-proxy-1.4.3 mccabe-0.6.1 numpy-1.17.2 pandas-0.24.2 pylint-2.4.4 python-dateutil-2.8.0 pytz-2019.3 scikit-learn-0.20.3 scipy-1.3.1 six-1.12.0 typed-ast-1.4.3 wrapt-1.11.2
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+Removing intermediate container 16810efe3d3c
+ ---> 32e94672472c
+Step 5/6 : EXPOSE 80
+ ---> Running in 26a93b0be767
+Removing intermediate container 26a93b0be767
+ ---> 6afbea81d1ba
+Step 6/6 : CMD [ "python", "app.py" ]
+ ---> Running in 5423d8c2fbac
+Removing intermediate container 5423d8c2fbac
+ ---> a86c1460d904
+Successfully built a86c1460d904
+Successfully tagged bostonhousing:latest
+REPOSITORY                                                                                                TAG                                            IMAGE ID       CREATED                  SIZE
+bostonhousing                                                                                             latest                                         a86c1460d904   Less than a second ago   1.19GB
+<none>                                                                                                    <none>                                         423a27720eae   6 minutes ago            1.19GB
+<none>                                                                                                    <none>                                         fd93a0353035   22 minutes ago           1.19GB
+udacity                                                                                                   latest                                         a05a422ad989   25 minutes ago           1.19GB
+145648833137.dkr.ecr.us-east-1.amazonaws.com/udacity                                                      latest                                         ad7fd45f8cd8   3 days ago               983MB
+app                                                                                                       latest                                         b0b201298da3   4 days ago               959MB
+circleci/picard                                                                                           latest                                         b12f95ce2779   5 days ago               193MB
+helloworldfunction                                                                                        rapid-1.33.0-x86_64                            328be2e93421   6 days ago               623MB
+helloworldfunction                                                                                        python3.9-v1                                   a895cf5fc9ba   6 days ago               599MB
+<none>                                                                                                    <none>                                         630ec8d3bfe7   6 days ago               622MB
+<none>                                                                                                    <none>                                         c7c0a9c5dff2   6 days ago               622MB
+145648833137.dkr.ecr.us-east-1.amazonaws.com/helloworldstack2022ba9b8e93/helloworldfunction19d43fc4repo   helloworldfunction-6d85467ded22-python3.9-v1   6d85467ded22   6 days ago               597MB
+<none>                                                                                                    <none>                                         dada954df6d7   6 days ago               622MB
+145648833137.dkr.ecr.us-east-1.amazonaws.com/helloworldstack2022ba9b8e93/helloworldfunction19d43fc4repo   helloworldfunction-fe6918fb2d34-python3.9-v1   fe6918fb2d34   6 days ago               597MB
+public.ecr.aws/lambda/python                                                                              3.9                                            306fd8298dc2   7 days ago               595MB
+python                                                                                                    3.7.3-stretch                                  34a518642c76   3 years ago              929MB
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 311-049-642
+[2022-10-04 20:35:52,567] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2022-10-04 20:35:52,583] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-10-04 20:35:52,594] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-10-04 20:35:52,598] INFO in app: output prediction: 
+[20.35373177134412]
+172.17.0.1 - - [04/Oct/2022 20:35:52] "POST /predict HTTP/1.1" 200 -

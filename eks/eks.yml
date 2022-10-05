@@ -1,0 +1,47 @@
+Parameters:
+  clustername:
+      Description: Name of EKS cluster
+      Type: String
+      Default: "ekscluster"
+Resources:
+  EKSCluster:
+      Type: AWS::EKS::Cluster
+      Properties:
+        Name: !Ref clustername
+        Version: "1.20"
+        RoleArn: "arn:aws:iam::145648833137:role/myEKSClusterRole"
+        ResourcesVpcConfig:
+          SecurityGroupIds:
+            - sg-0d40fce1c2e910627
+          SubnetIds:
+            - subnet-009bbeaface6fa432
+            - subnet-0ee152074337a0f3f
+          EndpointPublicAccess: true
+          EndpointPrivateAccess: true
+          PublicAccessCidrs: [ "1.1.1.2/32" ]
+        Logging:
+          ClusterLogging:
+            EnabledTypes:
+              - Type: api
+              - Type: audit
+        Tags:
+          - Key: "Name"
+            Value: !Ref clustername
+  EKSNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: !Ref clustername
+      NodeRole: 'arn:aws:iam::145648833137:role/myEKSWorkerNodeRole'
+      ScalingConfig:
+        MinSize: 3
+        DesiredSize: 5
+        MaxSize: 7
+      Labels:
+        Key1: app_pool
+      Subnets:
+        - subnet-009bbeaface6fa432
+        - subnet-0ee152074337a0f3f
+Outputs:
+  ClusterName:
+    Value: !Ref clustername
+    Description: Name of EKS Cluster
