@@ -1,4 +1,4 @@
-verion: 2.1
+version: 2.1
 
 parameters:
   build-code:
@@ -23,7 +23,7 @@ jobs:
   build:
     docker:
       - image: python:3.7.3-stretch
-        working_directory: ~/repo
+        # working_directory: ~/repo
 
     steps:
       - checkout

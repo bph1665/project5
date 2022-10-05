@@ -9,7 +9,7 @@ workflows:
     jobs:
       - path-filtering/filter:
           base-revision: master
-          config-path: .circleci/continue-configasdfasdf.yml
+          config-path: .circleci/continue-config.yml
           mapping: |
             src/.* build-code true
             eks/.* build-eks true
