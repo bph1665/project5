@@ -41,6 +41,7 @@ Resources:
       Subnets:
         - subnet-009bbeaface6fa432
         - subnet-0ee152074337a0f3f
+
 Outputs:
   ClusterName:
     Value: !Ref clustername
