@@ -44,5 +44,5 @@ Resources:
 Outputs:
   ClusterName:
     Value: !Ref clustername
-    Description: Name of EKS Cluste
+    Description: Name of EKS Cluster
 
