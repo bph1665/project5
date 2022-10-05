@@ -3,7 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
 version: '2.1'
-
+# CIRCLE_CONTINUATION_KEY
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
 workflows:
@@ -11,7 +11,7 @@ workflows:
     jobs:
       - path-filtering/filter:
           base-revision: master
-          config-path: .circleci/continue-config.yml
+          configuration-path: .circleci/continue-config.yml
           mapping: |
             src/.* build-code true
             eks/.* build-eks true
