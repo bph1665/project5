@@ -17,6 +17,7 @@ jobs:
       - run:
           name: update eks cluster
           command: |
+            echo "Updating cloud formatino template"
             cloudformation update-stack --stack-name eks --region us-east-2 --template-body file://eks/eks.yml
   
   build:
