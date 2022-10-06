@@ -179,7 +179,7 @@ Resources:
         Fn::Select:
         - '0'
         - Fn::GetAZs:
-          Ref: AWS::Region
+            Ref: AWS::Region
       CidrBlock:
         Ref: PublicSubnet01Block
       VpcId:
@@ -196,7 +196,7 @@ Resources:
         Fn::Select:
         - '1'
         - Fn::GetAZs:
-          Ref: AWS::Region
+            Ref: AWS::Region
         CidrBlock:
           Ref: PublicSubnet02Block
         VpcId:
@@ -213,7 +213,7 @@ Resources:
         Fn::Select:
         - '0'
         - Fn::GetAZs:
-          Ref: AWS::Region
+            Ref: AWS::Region
         CidrBlock:
           Ref: PrivateSubnet01Block
         VpcId:
