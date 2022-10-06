@@ -325,7 +325,7 @@ Resources:
   EKSNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
-      ClusterName: Blue
+      ClusterName: !Ref EKSClusterName
       NodeRole: 
         "Fn::GetAtt": ["NodeInstanceRole", "Arn"]
       ScalingConfig:
@@ -333,7 +333,7 @@ Resources:
         DesiredSize: !Ref NumWorkerNodes
         MaxSize: !Ref NumWorkerNodesMax
       Labels:
-        Key1: app_pool
+        Key1: blue
       Subnets:
         - subnet-009bbeaface6fa432
         - subnet-0ee152074337a0f3f
