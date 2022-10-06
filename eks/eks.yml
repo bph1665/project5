@@ -321,6 +321,7 @@ Resources:
       Roles:
         - Ref: NodeInstanceRole
 
+
   EKSNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
