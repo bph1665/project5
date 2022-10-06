@@ -69,9 +69,9 @@ Resources:
       CidrBlock:  !Ref VpcBlock
       EnableDnsSupport: true
       EnableDnsHostnames: true
-    Tags:
-    - Key: Name
-      Value: !Sub '${AWS::StackName}-VPC'
+      Tags:
+      - Key: Name
+        Value: !Sub '${AWS::StackName}-VPC'
   InternetGateway:
     Type: AWS::EC2::InternetGateway
   VPCGatewayAttachment:
@@ -83,31 +83,31 @@ Resources:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
-    Tags:
-    - Key: Name
-      Value: Public Subnets
-    - Key: Network
-      Value: Public
+      Tags:
+      - Key: Name
+        Value: Public Subnets
+      - Key: Network
+        Value: Public
 
   PrivateRouteTable01:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
-    Tags:
-    - Key: Name
-      Value: Private Subnet AZ1
-    - Key: Network
-      Value: Private01
+      Tags:
+      - Key: Name
+        Value: Private Subnet AZ1
+      - Key: Network
+        Value: Private01
 
   PrivateRouteTable02:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
-    Tags:
-    - Key: Name
-      Value: Private Subnet AZ2
-    - Key: Network
-      Value: Private02  
+      Tags:
+      - Key: Name
+        Value: Private Subnet AZ2
+      - Key: Network
+        Value: Private02  
   PublicRoute:
     Type: AWS::EC2::Route
     Properties:
@@ -143,9 +143,9 @@ Resources:
     Properties:
       AllocationId: !GetAtt 'NatGatewayEIP1.AllocationId'
       SubnetId: !Ref PublicSubnet01
-    Tags:
-    - Key: Name
-      Value: !Sub '${AWS::StackName}-NatGatewayAZ1'
+      Tags:
+      - Key: Name
+        Value: !Sub '${AWS::StackName}-NatGatewayAZ1'
   NatGateway02:
     DependsOn:
     - NatGatewayEIP2
@@ -153,11 +153,11 @@ Resources:
     - VPCGatewayAttachment
     Type: AWS::EC2::NatGateway
     Properties:
-    AllocationId: !GetAtt 'NatGatewayEIP2.AllocationId'
-    SubnetId: !Ref PublicSubnet02
-    Tags:
-    - Key: Name
-      Value: !Sub '${AWS::StackName}-NatGatewayAZ2'
+      AllocationId: !GetAtt 'NatGatewayEIP2.AllocationId'
+      SubnetId: !Ref PublicSubnet02
+      Tags:
+      - Key: Name
+        Value: !Sub '${AWS::StackName}-NatGatewayAZ2'
   NatGatewayEIP1:
     DependsOn:
     - VPCGatewayAttachment
@@ -180,13 +180,13 @@ Resources:
         - '0'
         - Fn::GetAZs:
           Ref: AWS::Region
-        CidrBlock:
-          Ref: PublicSubnet01Block
-        VpcId:
-          Ref: VPC
-    Tags:
-    - Key: Name
-      Value: !Sub "${AWS::StackName}-PublicSubnet01"
+      CidrBlock:
+        Ref: PublicSubnet01Block
+      VpcId:
+        Ref: VPC
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet01"
   PublicSubnet02:
     Type: AWS::EC2::Subnet
     Metadata:
@@ -201,9 +201,9 @@ Resources:
           Ref: PublicSubnet02Block
         VpcId:
           Ref: VPC
-    Tags:
-    - Key: Name
-      Value: !Sub "${AWS::StackName}-PublicSubnet02"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet02"
   PrivateSubnet01:
     Type: AWS::EC2::Subnet
     Metadata:
@@ -230,13 +230,13 @@ Resources:
     Properties:
       AvailabilityZone:
         Fn::Select:
-        - '1'
-        - Fn::GetAZs:
-          Ref: AWS::Region
-        CidrBlock:
-          Ref: PrivateSubnet02Block
-        VpcId:
-          Ref: VPC
+          - '1'
+          - Fn::GetAZs:
+              Ref: AWS::Region
+      CidrBlock:
+        Ref: PrivateSubnet02Block
+      VpcId:
+        Ref: VPC
     Tags:
     - Key: Name
       Value: !Sub "${AWS::StackName}-PrivateSubnet02"
