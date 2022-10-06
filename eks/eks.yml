@@ -335,8 +335,8 @@ Resources:
       Labels:
         Key1: blue
       Subnets:
-        - subnet-009bbeaface6fa432
-        - subnet-0ee152074337a0f3f
+        - !Ref PrivateSubnet01
+        - !Ref PrivateSubnet02
     DependsOn: [EKSCluster,NodeInstanceRole,NodeInstanceProfile]
 
 
