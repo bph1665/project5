@@ -1,0 +1,122 @@
+Parameters:
+  clustername:
+      Description: Name of EKS cluster
+      Type: String
+      Default: "ekscluster2"
+  NumWorkerNodes:
+    Type: Number
+    Description: Number of worker nodes to create
+    Default: 2
+  NumWorkerNodesMax:
+    Type: Number
+    Description: Number of worker nodes to create
+    Default: 3
+  NumWorkerNodesMin:
+    Type: Number
+    Description: Number of worker nodes to create
+    Default: 1
+
+
+  WorkerNodesInstanceType:
+    Type: String
+    Description: EC2 instance type for the worker nodes
+    Default: t3.medium
+  KeyPairName:
+    Type: String
+    Description: Name of an existing EC2 key pair (for SSH-access to the worker 
+    Default: useast2
+  VpcId:    
+    Type: String
+    Description: vpc
+    Default: vpc-0319648eeb4ea0117
+
+Resources:
+  EKSIAMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      RoleName: EKSIAMRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+
+  EKSCluster:
+      Type: AWS::EKS::Cluster
+      Properties:
+        Name: !Ref clustername
+        Version: "1.23"
+        RoleArn:
+          "Fn::GetAtt": ["EKSIAMRole", "Arn"]
+        ResourcesVpcConfig:
+          SecurityGroupIds:
+            - sg-0d40fce1c2e910627
+          SubnetIds:
+            - subnet-009bbeaface6fa432
+            - subnet-0ee152074337a0f3f
+          EndpointPublicAccess: true
+          EndpointPrivateAccess: true
+          PublicAccessCidrs: [ "1.1.1.2/32" ]
+        Logging:
+          ClusterLogging: 
+            EnabledTypes:
+              - Type: api
+              - Type: audit
+        Tags:
+          - Key: "Name"
+            Value: !Ref clustername
+      DependsOn: EKSIAMRole
+
+  NodeInstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+        - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      Path: /
+
+  NodeInstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: /
+      Roles:
+        - Ref: NodeInstanceRole
+
+  EKSNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: !Ref clustername
+      NodeRole: 
+        "Fn::GetAtt": ["NodeInstanceRole", "Arn"]
+      ScalingConfig:
+        MinSize: !Ref NumWorkerNodesMin
+        DesiredSize: !Ref NumWorkerNodes
+        MaxSize: !Ref NumWorkerNodesMax
+      Labels:
+        Key1: app_pool
+      Subnets:
+        - subnet-009bbeaface6fa432
+        - subnet-0ee152074337a0f3f
+    DependsOn: [EKSCluster,NodeInstanceRole,NodeInstanceProfile]
+
+Outputs:
+  ClusterName:
+    Value: !Ref clustername
+    Description: Name of EKS Cluster
