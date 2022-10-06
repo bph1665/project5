@@ -324,7 +324,7 @@ Resources:
   EKSNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
-      ClusterName: !Ref clustername
+      ClusterName: Blue
       NodeRole: 
         "Fn::GetAtt": ["NodeInstanceRole", "Arn"]
       ScalingConfig:
