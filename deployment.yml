@@ -23,12 +23,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-service-nodeport
+  name: nginx-service-loadbalancer
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    app: myapp
+    app: nginx
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+service.beta.kubernetes.io/aws-load-balancer-type: nlb
