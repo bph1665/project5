@@ -34,6 +34,19 @@ Parameters:
     Type: String
     Default: 192.168.192.0/18
     Description: CidrBlock for private subnet 02 within the VPC
+  NumWorkerNodesMin:
+    Type: Number
+    Default: 1
+    Description: Minimum Node Pool Size
+  NumWorkerNodesMax:
+    Type: Number
+    Default: 2
+    Description: Maximum Node Pool Size
+  NumWorkerNodes:
+    Type: Number
+    Default: 2
+    Description: Desired size of node pool
+
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
