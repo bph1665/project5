@@ -18,7 +18,7 @@ jobs:
           name: update eks cluster
           command: |
             echo "Updating eks cluster..."
-            aws cloudformation update-stack --stack-name eks --region us-east-2 --template-body file://eks/eks.yml
+            aws cloudformation update-stack --stack-name eks --region us-east-2 --template-body file://eks/eks.yml --capabilities CAPABILITY_NAMED_IAM
   
   build:
     docker:
@@ -48,6 +48,22 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
+  publish:
+    docker:
+      - image: amazon/aws-cli:latest
+    steps:
+      - checkout
+      - run:
+          name: install kubectl
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+      - run:
+          name: update kubectl config
+          command: |
+            aws eks update-kubeconfig --region us-east-2 --name ekscluster
+
 # run lint!
       - run:
           name: run lint
@@ -60,8 +76,13 @@ workflows:
     when: << pipeline.parameters.build-eks >>
     jobs:
       - infra
-  build:
-    when: << pipeline.parameters.build-code >>
+  build-rest:
+#    when: << pipeline.parameters.build-code >>
     jobs:
       - build
-
+      # - publish:
+      #    requires: 
+      #      - build
+      #    filters:
+      #      branches:
+      #        only: master
