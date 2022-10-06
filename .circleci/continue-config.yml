@@ -78,11 +78,14 @@ jobs:
       - run:
           name: deploy image to eks cluster
           command: |
-            kubectl create deploy project5 --image=145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+            kubectl apply -f deployment.yml
+            kubectl get pods -l 'app=myapp' -o wide | awk {'print $1" " $3 " " $6'} | column -t
+            kubectl create -f clusterip.yaml
+            # kubectl expose deployment myapp-deployment  --type=ClusterIP  --name=app-service-cluster-ip
+            # kubectl create deploy project5 --image=145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+            # podname=$(kubectl get pods | awk '{w=$1} END{print w}')
+            # kubectl port-forward pod/$podname --address 0.0.0.0 8000:80
 
-
-kubectl create deploy project5 --image=145648833137.dkr.ecr.us-east-2.amazo
-naws.com/project5:latest
 
 
 workflows:
