@@ -84,7 +84,7 @@ jobs:
           command: |
             kubectl apply -f deployment.yml
             kubectl get pods -l 'app=myapp' -o wide | awk {'print $1" " $3 " " $6'} | column -t
-            kubectl create -f green.yaml
+            kubectl apply -f green-deployment.yaml
             # kubectl expose deployment myapp-deployment  --type=ClusterIP  --name=app-service-cluster-ip
             # kubectl create deploy project5 --image=145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
             # podname=$(kubectl get pods | awk '{w=$1} END{print w}')
