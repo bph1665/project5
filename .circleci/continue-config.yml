@@ -60,16 +60,22 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update kubectl config
-          command: |
-            aws eks update-kubeconfig --region us-east-2 --name ekscluster
-      - run:
           name: bulid and push image
           command: |
+            whoami
+            systemctl status docker.service
+            usermod -a -G docker root
+            id root
+            newgrp docker
+            systemctl start docker.service              
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
             docker build -t project5 .
             docker tag project5:latest 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
             docker push 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+      - run:
+          name: update kubectl config
+          command: |
+            aws eks update-kubeconfig --region us-east-2 --name ekscluster
       - run:
           name: deploy image to eks cluster
           command: |
