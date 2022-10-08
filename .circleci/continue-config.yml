@@ -72,17 +72,17 @@ jobs:
           name: update kubectl config
           command: |
             aws eks update-kubeconfig --region us-east-2 --name ekscluster
-      # - run:
-      #     name: bulid and push image
-      #     command: |
-      #       aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
-      #       docker build -t project5 .
-      #       docker tag project5:latest 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
-      #       docker push 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+      - run:
+          name: bulid and push image
+          command: |
+            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
+            docker build -t project5 .
+            docker tag project5:latest 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+            docker push 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
       - run:
           name: deploy image to eks cluster
           command: |
-            kubectl apply -f green-deployment.yaml
+            kubectl apply -f green-deployment.yml
             kubectl get pods -l 'app=myapp' -o wide | awk {'print $1" " $3 " " $6'} | column -t
 workflows:
   build-infra:
