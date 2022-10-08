@@ -75,6 +75,12 @@ jobs:
       - run:
           name: bulid and push image
           command: |
+            yum -y install docker
+            usermod -a -G docker ec2-user
+            whoami
+            id ec2-user
+            newgrp docker
+            systemctl start docker.service            
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
             docker build -t project5 .
             docker tag project5:latest 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
