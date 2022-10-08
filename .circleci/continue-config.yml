@@ -67,7 +67,6 @@ jobs:
           name: deploy image to eks cluster
           command: |
             kubectl apply -f green-deployment.yml
-            kubectl get pods -l 'app=myapp' -o wide | awk {'print $1" " $3 " " $6'} | column -t
 workflows:
   build-infra:
     when: << pipeline.parameters.build-eks >>
