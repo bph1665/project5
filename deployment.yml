@@ -23,11 +23,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nlb-sample-service
+  name: nlb-service
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: external
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-subnets: eks-PublicSubnet01,eks-PublicSubnet02
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eip
 spec:
   ports:
     - port: 80
@@ -36,3 +38,5 @@ spec:
   type: LoadBalancer
   selector:
     app: myapp
+  externalIPs: 
+  - 3.140.172.141
