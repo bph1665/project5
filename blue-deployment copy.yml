@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: blue
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nlb-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-subnets: eks-PublicSubnet01,eks-PublicSubnet02
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eip
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: green
+  selector:
+    app: myapp
+  externalIPs: 
+  - 3.140.172.141

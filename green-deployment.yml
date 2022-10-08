@@ -9,6 +9,8 @@ spec:
   selector:
     matchLabels:
       app: myapp
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: green
   template:
     metadata:
       labels:
@@ -36,6 +38,8 @@ spec:
       targetPort: 80
       protocol: TCP
   type: LoadBalancer
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: green
   selector:
     app: myapp
   externalIPs: 

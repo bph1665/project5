@@ -328,6 +328,26 @@ Resources:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
       ClusterName: !Ref EKSClusterName
+      NodegroupName: green
+      NodeRole: 
+        "Fn::GetAtt": ["NodeInstanceRole", "Arn"]
+      ScalingConfig:
+        MinSize: !Ref NumWorkerNodesMin
+        DesiredSize: !Ref NumWorkerNodes
+        MaxSize: !Ref NumWorkerNodesMax
+      Labels:
+        Key1: pool
+      Subnets:
+        - !Ref PublicSubnet01
+        - !Ref PublicSubnet02
+    DependsOn: [EKSCluster,NodeInstanceRole,NodeInstanceProfile]
+
+
+  EKSNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      NodegroupName: blue
       NodeRole: 
         "Fn::GetAtt": ["NodeInstanceRole", "Arn"]
       ScalingConfig:
