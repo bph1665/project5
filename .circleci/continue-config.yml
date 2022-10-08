@@ -64,10 +64,11 @@ jobs:
           command: |
             whoami
             systemctl status docker.service
-            usermod -a -G docker root
-            id root
+            usermod -a -G docker circleci
+            id circleci
             newgrp docker
-            systemctl start docker.service              
+            service docker status
+            service docker start
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
             docker build -t project5 .
             docker tag project5:latest 145648833137.dkr.ecr.us-east-2.amazonaws.com/project5:latest
