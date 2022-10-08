@@ -324,7 +324,7 @@ Resources:
         - Ref: NodeInstanceRole
 
 
-  EKSNodegroup:
+  EKSNodegroupGreen:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
       ClusterName: !Ref EKSClusterName
@@ -336,14 +336,14 @@ Resources:
         DesiredSize: !Ref NumWorkerNodes
         MaxSize: !Ref NumWorkerNodesMax
       Labels:
-        Key1: pool
+        Key1: green
       Subnets:
         - !Ref PublicSubnet01
         - !Ref PublicSubnet02
     DependsOn: [EKSCluster,NodeInstanceRole,NodeInstanceProfile]
 
 
-  EKSNodegroup:
+  EKSNodegroupBlue:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
       ClusterName: !Ref EKSClusterName
@@ -355,7 +355,7 @@ Resources:
         DesiredSize: !Ref NumWorkerNodes
         MaxSize: !Ref NumWorkerNodesMax
       Labels:
-        Key1: pool
+        Key1: blue
       Subnets:
         - !Ref PublicSubnet01
         - !Ref PublicSubnet02
