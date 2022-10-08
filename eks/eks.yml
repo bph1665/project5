@@ -343,7 +343,7 @@ Resources:
     DependsOn: [EKSCluster,NodeInstanceRole,NodeInstanceProfile]
 
 
-  EKSNodegroupBlue:
+  EKSNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
       ClusterName: !Ref EKSClusterName
