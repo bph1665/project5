@@ -63,7 +63,6 @@ jobs:
           name: bulid and push image
           command: |
             whoami
-            systemctl status docker.service
             usermod -a -G docker circleci
             id circleci
             newgrp docker
