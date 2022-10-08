@@ -62,7 +62,6 @@ jobs:
       - run:
           name: install kubectl 1.23.12
           command: |
-            whoami
             yum -y install wget
             yum -y install tar
             yum -y install gzip.x86_64
@@ -79,8 +78,8 @@ jobs:
             yum update
             cat /etc/os*
             amazon-linux-extras install docker -y             
-            usermod -a -G docker $USER
-            id $USER
+            usermod -a -G docker root
+            id root
             newgrp docker
             systemctl start docker.service            
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
