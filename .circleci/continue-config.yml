@@ -77,9 +77,14 @@ jobs:
           command: |
             yum update
             #amazon-linux-extras install docker -y             
+            #yum install -y yum-utils
+            #yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            #yum -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
             yum install -y yum-utils
+            device-mapper-persistent-data
+            lvm2 
             yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-            yum -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            yum install -y docker-ce
             usermod -a -G docker root
             id root
             newgrp docker
