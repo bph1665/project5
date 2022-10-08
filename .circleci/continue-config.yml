@@ -62,10 +62,9 @@ jobs:
       - run:
           name: bulid and push image
           command: |
-            whoami
             sudo usermod -a -G docker circleci
             id circleci
-            newgrp docker
+            sudo newgrp docker
             service docker status
             sudo service docker start
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 145648833137.dkr.ecr.us-east-2.amazonaws.com
