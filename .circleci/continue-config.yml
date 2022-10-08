@@ -76,8 +76,10 @@ jobs:
           name: bulid and push image
           command: |
             yum update
-            cat /etc/os*
-            amazon-linux-extras install docker -y             
+            #amazon-linux-extras install docker -y             
+            yum install -y yum-utils
+            yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            yum -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
             usermod -a -G docker root
             id root
             newgrp docker
