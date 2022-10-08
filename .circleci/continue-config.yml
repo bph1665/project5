@@ -56,12 +56,19 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/aws:2022.09
+      - image: cimg/base:current
+    resource_class: xlarge
     steps:
       - checkout
       - run:
+          name: install aws cli
+          command: |
+            sudo apt update
+            sudo apt install awscli
+      - run:
           name: bulid and push image
           command: |
+            whoami
             sudo usermod -a -G docker circleci
             id circleci
             #sudo newgrp docker
