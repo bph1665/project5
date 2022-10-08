@@ -76,7 +76,7 @@ jobs:
           name: bulid and push image
           command: |
             yum update
-            yum -y install docker
+            amazon-linux-extras install docker -y            
             usermod -a -G docker ec2-user
             whoami
             id ec2-user
