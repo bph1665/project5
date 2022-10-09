@@ -51,7 +51,7 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-  build-docker:
+  dockerbuild:
     docker:
     - image: docker:17.05.0-ce-git
     steps:
@@ -91,7 +91,7 @@ workflows:
   build-docker:
     when: << pipeline.parameters.build-docker >>
     jobs:
-      - build-docker
+      - dockerbuild
   build-app:
     jobs:
       - build
