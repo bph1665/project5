@@ -90,6 +90,8 @@ workflows:
       - infra
   build-docker:
     when: << pipeline.parameters.build-docker >>
+    jobs:
+      - build-docker
   build-app:
     jobs:
       - build
