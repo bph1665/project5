@@ -11,7 +11,7 @@ workflows:
           base-revision: master
           config-path: .circleci/continue-config.yml
           mapping: |
-            src/.* build-code true
+            Dockerfile build-docker true
             eks/.* build-eks true
 
 
