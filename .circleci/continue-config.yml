@@ -56,7 +56,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
   dockerbuild:
     docker:
-    - image: docker:latest
+    - image: docker/compoase:latest
     steps:
       - checkout
       - run:
