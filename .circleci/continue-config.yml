@@ -24,7 +24,7 @@ jobs:
             # aws cloudformation deploy --stack-name eks --region us-east-2 --template-body file://eks/eks.yml --capabilities CAPABILITY_NAMED_IAM
             aws cloudformation deploy --stack-name eks --region us-east-2 --template-file eks/eks.yml --capabilities CAPABILITY_NAMED_IAM
   
-  build-app:
+  build:
     docker:
       - image: python:3.7.3-stretch
     steps:
