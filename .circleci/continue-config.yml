@@ -55,17 +55,18 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
   dockerbuild:
-    docker:
-    - image: docker/compoase:latest
+    machine:
+      image: ubuntu-2204:2022.04.2
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cach python3 py3-pip
-            pip3 install --upgrade pip
-            pip3 install --no-cache-dir docker-compose
-            pip3 install --no-cache-dir awscli
+            apt install awscli
+            #apk add --no-cach python3 py3-pip
+            #pip3 install --upgrade pip
+            #pip3 install --no-cache-dir docker-compose
+            #pip3 install --no-cache-dir awscli
 
       - run:
           name: build and push image
