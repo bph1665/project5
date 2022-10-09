@@ -7,6 +7,9 @@ parameters:
   build-eks:
     type: boolean
     default: false
+  build-docker:
+    type: boolean
+    default: false
 
 jobs:
   infra:
@@ -88,7 +91,7 @@ workflows:
     when: << pipeline.parameters.build-eks >>
     jobs:
       - infra
-  build-docker:
+  build-dockerwf:
     when: << pipeline.parameters.build-docker >>
     jobs:
       - dockerbuild
