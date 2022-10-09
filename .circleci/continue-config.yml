@@ -95,9 +95,7 @@ workflows:
   build-dockerwf:
     when: << pipeline.parameters.build-docker >>
     jobs:
-      - dockerbuild:
-          requires: 
-           - build-app
+      - dockerbuild
   build-app:
     jobs:
       - build
